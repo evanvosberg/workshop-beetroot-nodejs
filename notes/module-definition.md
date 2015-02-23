@@ -1,37 +1,103 @@
-// CommonJS
+# Module Definitions
 
-require()
+## CommonJS
 
-module = {
-    exports: {}
+Free variables in the module context
+
+- `require` method to load modules
+- `module` module specific object
+- `exports` object to export when required in another module
+
+### How exports works
+Note that `module` has a property `exports` which references the `exports` object, internally NodeJS uses the `module.exports`. 
+
+Internally it looks like this:
+
+```js
+var module = 
+        exports: {}
+    };
+
+var exports = module.exports;
+```
+
+Why it's important to know this?
+
+#### Example #1
+
+This
+
+```js
+exports = function () {
+	// Do something awesome
 };
+```
 
-exports             // exports === module.exports
+would still exports 
 
+```
+{}
+```
 
-// AMD (Asynchronous Module Definition)
+#### Example #2
 
+This
+
+```js
+module.exports = function () {
+	// Do something awesome
+};
+```
+
+would exports that
+
+```js
+function () {
+	// Do something awesome
+}
+```
+
+## AMD (Asynchronous Module Definition)
+
+In browsers environment we need to load the modules form the server and mainly we doing this in an asynchronous way.
+
+### Syntax
+
+```js
 define(function (require, exports, module) {
     // Here we can write CommonJS
 
 });
+```
 
-// Let RequireJS try to load required module automatically
+### Let RequireJS try to load required module automatically
+
+```
 define(function (require, exports, module) {
     // Here we can write CommonJS
     var otherModule = require('other-module')
 
 });
+```
 
-// Safe way to ensure modules are loaded before execute the callback
+### Safe way to ensure modules are loaded before execute the callback
+
+```js
 define(['require', 'exports', 'module', 'other-module'], function (require, exports, module) {
     // Here we can write CommonJS
     var otherModule = require('other-module')
 
 });
+```
 
 
-// UMD (Universal Module Definition)
+## UMD (Universal Module Definition)
+
+Way to define your module runing in different environments.
+
+### Syntax
+
+```js
 (function (root, factory) {
     if (typeof module !== 'undefined' && module.exports) {
         // CommonJS
@@ -44,8 +110,11 @@ define(['require', 'exports', 'module', 'other-module'], function (require, expo
     // Here we can write CommonJS
 
 }));
+```
 
-// UMD (Universal Module Definition) Safe mode
+### UMD (Universal Module Definition) Safe mode
+
+```js
 (function (root, factory) {
     if (typeof module !== 'undefined' && module.exports) {
         // CommonJS
@@ -59,9 +128,12 @@ define(['require', 'exports', 'module', 'other-module'], function (require, expo
     var otherModule = require('other-module')
 
 }));
+```
 
 
-// UMD (Universal Module Definition) Support non module loader environment
+### UMD (Universal Module Definition) Support non module loader environment
+
+```js
 (function (root, factory) {
     if (typeof module !== 'undefined' && module.exports) {
         // CommonJS
@@ -71,9 +143,10 @@ define(['require', 'exports', 'module', 'other-module'], function (require, expo
         define(['other-module'], factory);
     } else {
         // No module loader
-        factory(root.otherModule);
+        root.myModule = factory(root.otherModule);
     }
 }(this, function (otherModule) {
     // Here we CAN'T write CommonJS
 
 }));
+```
