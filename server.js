@@ -1,14 +1,14 @@
 var express = require('express');
-var html = require('./html-doc');
-var requirejs = require('requirejs');
-var universal = require('./public/universal');
+
+var page = require('./public/js/templates/page');
+var universal = require('./public/js/examples/universal');
 
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res, next) {
-    res.send(html);
+    res.send(page);
 });
 
 

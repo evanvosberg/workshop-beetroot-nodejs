@@ -1,6 +1,6 @@
 define(function (require, exports, module) {
-    var example = require('./example-client');
-    var universal = require('./universal');
+    var example = require('./examples/example-client');
+    var universal = require('./examples/universal');
 
     console.log(example);
     

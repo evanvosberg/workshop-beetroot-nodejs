@@ -21,7 +21,7 @@
       "url": "http://www.opensource.org/licenses/MIT"
     }
   ],
-  "main": "main.js",
+  "main": "server.js",
   "dependencies": {
     "colors": "^1.0.3",
     "express": "*",
