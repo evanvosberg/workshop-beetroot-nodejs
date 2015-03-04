@@ -1,17 +1,20 @@
 var express = require('express');
-
-var page = require('./public/js/templates/page');
-var universal = require('./public/js/examples/universal');
-
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function (req, res, next) {
-    res.send(page);
+app.get('/api/:id', function (req, res, next) {
+    try {
+        res.json(require('./api/' + req.params.id + '.json'));
+    } catch (err) {
+        res.status(404).json({});
+    }
 });
 
 
-app.listen(3000);
+app.use(express.static(__dirname + '/public'));
 
-console.log(universal);
+
+app.get('/', require('./public/js/server/index'));
+app.get('/:page', require('./public/js/server/page'));
+
+
+app.listen(3000);

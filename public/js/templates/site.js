@@ -11,7 +11,17 @@
     module.exports = function (data) {
         data || (data = {});
         
-        return data.body || '';
+        return '\
+<html>\
+<head>\
+<title>Test page</title>\
+<link href="styles/main.css" rel="stylesheet"/>\
+<script src="js/require.js" data-main="js/main.js"></script>\
+</head>\
+<body>\
+' + (data.body || '') + '\
+</body>\
+</html>';
     };
 
 }));

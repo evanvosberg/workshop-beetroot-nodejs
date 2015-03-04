@@ -7,11 +7,11 @@
         define(factory);
     }
 }(this, function (require, exports, module) {
+    var index = require('../templates/index');
 
-    module.exports = function (data) {
-        data || (data = {});
-        
-        return data.body || '';
+    module.exports = function (ctx, next) {
+        ctx.siteBody = index();
+
+        next();
     };
-
 }));

@@ -11,7 +11,7 @@
     module.exports = function (data) {
         data || (data = {});
         
-        return data.body || '';
+        return '<a href="/foo">Foo</a><br/><a href="/bar">Bar</a>';
     };
 
 }));
